@@ -6,7 +6,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     <main className="root">
         <Sidebar/>
       <div className="root-container">
-        <div className="wrapper">{children}</div>
+        {/* <div className="wrapper">{children}</div> */}
       </div>
     </main>
   );
