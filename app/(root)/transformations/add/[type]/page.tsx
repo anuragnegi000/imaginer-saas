@@ -27,5 +27,8 @@ const AddTransformationType =async ({params:{type}}:SearchParamProps) => {
 
   )
 }
+function fake(){
+  
+}
 
 export default AddTransformationType  
