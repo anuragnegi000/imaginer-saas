@@ -29,6 +29,7 @@ const AddTransformationType =async ({params:{type}}:SearchParamProps) => {
 }
 function fake(){
   console.log("data check")
+  console.log("log");
 }
 
 export default AddTransformationType  
