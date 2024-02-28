@@ -17,7 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { defaultValues } from "@/constants";
 
-const formSchema = z.object({
+export const formSchema = z.object({
   title: z.string(),
   aspectRatio: z.string().optional(),
   color: z.string().optional(),
@@ -48,16 +48,12 @@ export function TransformationForm({
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     console.log(values);
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        
-      </form>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8"></form>
     </Form>
   );
 }
