@@ -173,7 +173,7 @@ export function TransformationForm({
       <Button 
       type="submit"
       className="submit-button capitalize"
-      disabled={}
+      // disabled={}
       >Submit</Button>
     </Form>
   );
