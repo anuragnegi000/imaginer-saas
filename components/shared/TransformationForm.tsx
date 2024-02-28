@@ -78,6 +78,10 @@ export function TransformationForm({
     onChangeField: (value: string) => void
   ) => {};
 
+  const onInputChangeHandler=(field:string,value:string,type:string,onChangeField:(value:string)=>void)=>{
+
+  }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8"></form>
@@ -115,6 +119,62 @@ export function TransformationForm({
           )}
         />
       )}
+
+      {(type==='remove' || type ==='recolor')&&(
+        <div className="prompt-field">
+          <CustomField
+          control={form.control}
+          name="prompt"
+          formLabel={
+            type==='remove'?'Object to remove':
+            'Object to recolor'
+          } 
+          className="w-full"
+          render={(({field})=>(
+            <Input
+            value={field.value}
+            className="input-field"
+            onChange={(e)=>onInputChangeHandler(
+              'prompt',
+              e.target.value,
+              type,
+              field.onChange
+            )}
+            >
+            
+            </Input>
+          ))}
+          />
+          { type==='recolor'&&(
+            <CustomField
+            control={form.control}
+            name="color"
+            formLabel="Replacement Color"
+            className="w-full"
+            render={({field})=>(
+              <Input
+              value={field.value}
+            className="input-field"
+            onChange={(e)=>onInputChangeHandler(
+              'color',
+              e.target.value,
+              'recolor',
+              field.onChange
+            )}
+            ></Input>
+            
+
+            )}
+            />
+          )}
+        </div>
+
+      )}
+      <Button 
+      type="submit"
+      className="submit-button capitalize"
+      disabled={}
+      >Submit</Button>
     </Form>
   );
 }
