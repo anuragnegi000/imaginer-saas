@@ -28,8 +28,8 @@ import {
   transformationTypes,
 } from "@/constants";
 import { CustomField } from "./CustomField";
-import { useState } from "react";
-import { AspectRatioKey, debounce } from "@/lib/utils";
+import { useState, useTransition } from "react";
+import { AspectRatioKey, debounce, deepMergeObjects } from "@/lib/utils";
 
 export const formSchema = z.object({
   title: z.string(),
@@ -54,7 +54,7 @@ export function TransformationForm({
   const [isSubmitting,setIsSubmitting]=useState(false);
   const [isTransforming,setIsTransforming]=useState(false);
   const [transformationConfig,setTransformationConfig]=useState(config)
-
+  const [isPending,startTransition]=useTransition();
 
   const initialValues =
     data && action === "Update"
@@ -110,8 +110,18 @@ export function TransformationForm({
     },1000);
   }
 
-  const onTransformHandler =()=>{
+  //Pending return to updateCredits
 
+  const onTransformHandler =async ()=>{
+    setIsTransforming(true);
+    setTransformationConfig(
+      deepMergeObjects(newTransformation,transformationConfig)
+    )
+      setNewTransformation(null);
+
+      startTransition(async ()=>{
+        // await updateCredits(userID,creditFee)
+      })
   }
 
   return (
