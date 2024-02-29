@@ -91,11 +91,11 @@ export function TransformationForm({
       height:imageSize.height,
     }))
 
-    setNewTransformation(tranformationType.config)
+    // setNewTransformation(tranformationType.config)
     return onChangeField(value);
   };
 
-  const onInputChangeHandler=(field:string,value:string,type:string,onChangeField:(value:string)=>void)=>{
+  const onInputChangeHandler=(fieldName: string, value: string, type: string, onChangeField: (value: string) => void)=>{
     debounce(()=>{
       setNewTransformation((prevState:any)=>({
         ...prevState,
