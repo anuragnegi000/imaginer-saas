@@ -45,11 +45,16 @@ export function TransformationForm({
   userId,
   type,
   creditBalance,
+  config=null,
 }: TransformationFormProps) {
   const tranformationType = transformationTypes[type];
   const [image, setImage] = useState(data);
   const [newTransformation, setNewTransformation] = useState(null);
   useState<Transformations | null>(null);
+  const [isSubmitting,setIsSubmitting]=useState(false);
+  const [isTransforming,setIsTransforming]=useState(false);
+  const [transformationConfig,setTransformationConfig]=useState(config)
+
 
   const initialValues =
     data && action === "Update"
@@ -82,9 +87,13 @@ export function TransformationForm({
 
   }
 
+  const onTransformHandler =()=>{
+
+  }
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8"></form>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
       <CustomField
         control={form.control}
         name="title"
@@ -170,11 +179,24 @@ export function TransformationForm({
         </div>
 
       )}
+      <div className="flex flex-col gap-4">
+      <Button 
+      type="button"
+      className="submit-button capitalize"
+      disabled={isTransforming || newTransformation==='null'}
+      onClick={onTransformHandler}>
+      {isTransforming?'Transforming...':'Apply transformation'}
+      </Button>
+      
       <Button 
       type="submit"
       className="submit-button capitalize"
-      // disabled={}
-      >Submit</Button>
+      disabled={isSubmitting}
+      >
+      
+      {isSubmitting?'Submitting...':'Save Image'}</Button>
+      </div>
+      </form>
     </Form>
   );
 }
