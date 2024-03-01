@@ -38,6 +38,11 @@ export const formSchema = z.object({
   prompt: z.string().optional(),
   publicId: z.string(),
 });
+interface ImageState {
+  aspectRatio: String;
+  width: number;
+  height: number;
+}
 
 export function TransformationForm({
   action,
@@ -48,9 +53,9 @@ export function TransformationForm({
   config=null,
 }: TransformationFormProps) {
   const tranformationType = transformationTypes[type];
-  const [image, setImage] = useState(data);
-  const [newTransformation, setNewTransformation] = useState(null);
-  useState<Transformations | null>(null);
+  const [image, setImage] = useState<ImageState | null>(data);
+  const [newTransformation, setNewTransformation] = useState<Transformations | null>(null);
+  
   const [isSubmitting,setIsSubmitting]=useState(false);
   const [isTransforming,setIsTransforming]=useState(false);
   const [transformationConfig,setTransformationConfig]=useState(config)
@@ -70,7 +75,7 @@ export function TransformationForm({
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: initialValues,
+    defaultValues: initialValues, 
   });
 
   // 2. Define a submit handler.
@@ -84,14 +89,16 @@ export function TransformationForm({
   ) => {
     const imageSize=aspectRatioOptions[value as AspectRatioKey]
 
-    setImage((prevState:any)=>({
-      ...prevState,
-      aspectRatio:imageSize.aspectRatio,
-      width:imageSize.width,
-      height:imageSize.height,
-    }))
+    if (imageSize) {
+      setImage({
+        aspectRatio: imageSize.aspectRatio,
+        width: imageSize.width,
+        height: imageSize.height,
+      });
+    }
+  
 
-    // setNewTransformation(tranformationType.config)
+    setNewTransformation(tranformationType.config)
     return onChangeField(value);
   };
 
@@ -216,7 +223,7 @@ export function TransformationForm({
       <Button 
       type="button"
       className="submit-button capitalize"
-      disabled={isTransforming || newTransformation==='null'}
+      disabled={isTransforming}
       onClick={onTransformHandler}>
       {isTransforming?'Transforming...':'Apply transformation'}
       </Button>
